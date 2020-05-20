@@ -81,13 +81,83 @@ export default class EditPostPage extends React.Component {
         this.sendToApi()
     }
 
-    onChangeTitle = () =>{
+    onChangeTitle = () => {
         let title = document.getElementById("title").value;
         this.setState({
             title: title
         })
         document.getElementById("titlePreview").innerHTML = title
         this.sendToApi()
+    }
+
+    addTextSpan = () => {
+        let textarea = document.getElementById("html")
+
+        let start = textarea.selectionStart
+        let end = textarea.selectionEnd
+
+        let htmlInList = this.state.html.split("")
+
+        htmlInList.splice(start, 0, "<p class='lead'>")
+        htmlInList.splice(end+1, 0, "</p>")
+        let html = htmlInList.join("")
+        this.setState({
+            html: html
+        })
+    }
+
+    addHeader1 = () => {
+        let textarea = document.getElementById("html")
+
+        let start = textarea.selectionStart
+        let end = textarea.selectionEnd
+
+        let htmlInList = this.state.html.split("")
+
+        htmlInList.splice(start, 0, "<h1 class='display-4'>")
+        htmlInList.splice(end+1, 0, "</h1>")
+        let html = htmlInList.join("")
+        this.setState({
+            html: html
+        })
+    }
+
+    getIdFromYoutubeLink = (link) => {
+        return link.split("?")[1].split("=")[1]
+    }
+
+    addVideo = () => {
+        let video = prompt("Link to video (from youtube)")
+
+        let textarea = document.getElementById("html")
+        let start = textarea.selectionStart
+
+        let htmlInList = this.state.html.split("")
+
+        let videoHtml = `
+<iframe id="player" type="text/html" width="640" height="390"
+src="https://www.youtube.com/embed/${this.getIdFromYoutubeLink(video)}?enablejsapi=1"
+frameborder="0"></iframe>
+        `
+
+        htmlInList.splice(start, 0, videoHtml)
+        let html = htmlInList.join("")
+        this.setState({
+            html: html
+        })
+    }
+
+    addLineBreak = () => {
+        let textarea = document.getElementById("html")
+        let start = textarea.selectionStart
+
+        let htmlInList = this.state.html.split("")
+
+        htmlInList.splice(start, 0, "<br />")
+        let html = htmlInList.join("")
+        this.setState({
+            html: html
+        })
     }
     
     render() {
@@ -115,9 +185,40 @@ export default class EditPostPage extends React.Component {
                     </div>
                     
                     <div className="row h-100 mt-3">
-                        <textarea className="w-100 textarea" value={this.state.html} onChange={() => this.onChangeHTML()} id="html">
-                            
-                        </textarea>
+                        <div className="toolbar m-1">
+                            <ul>
+                                <li>
+                                    <button className="btn btn-secondary" title="Text" onClick={() => this.addTextSpan()}>
+                                        <svg class="bi bi-cursor-text" width="1em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M5 2a.5.5 0 01.5-.5c.862 0 1.573.287 2.06.566.174.099.321.198.44.286.119-.088.266-.187.44-.286A4.165 4.165 0 0110.5 1.5a.5.5 0 010 1c-.638 0-1.177.213-1.564.434a3.49 3.49 0 00-.436.294V7.5H9a.5.5 0 010 1h-.5v4.272c.1.08.248.187.436.294.387.221.926.434 1.564.434a.5.5 0 010 1 4.165 4.165 0 01-2.06-.566A4.561 4.561 0 018 13.65a4.561 4.561 0 01-.44.285 4.165 4.165 0 01-2.06.566.5.5 0 010-1c.638 0 1.177-.213 1.564-.434.188-.107.335-.214.436-.294V8.5H7a.5.5 0 010-1h.5V3.228a3.49 3.49 0 00-.436-.294A3.166 3.166 0 005.5 2.5.5.5 0 015 2zm3.352 1.355zm-.704 9.29z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </button>   
+                                </li>
+                                <li>
+                                    <button className="btn btn-secondary" title="Video" onClick={() => this.addVideo()}>
+                                        <svg class="bi bi-film" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M0 1a1 1 0 011-1h14a1 1 0 011 1v14a1 1 0 01-1 1H1a1 1 0 01-1-1V1zm4 0h8v6H4V1zm8 8H4v6h8V9zM1 1h2v2H1V1zm2 3H1v2h2V4zM1 7h2v2H1V7zm2 3H1v2h2v-2zm-2 3h2v2H1v-2zM15 1h-2v2h2V1zm-2 3h2v2h-2V4zm2 3h-2v2h2V7zm-2 3h2v2h-2v-2zm2 3h-2v2h2v-2z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button className="btn btn-secondary" title="Header" onClick={() => this.addHeader1()}>
+                                        <svg class="bi bi-type-h1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8.637 13V3.669H7.379V7.62H2.758V3.67H1.5V13h1.258V8.728h4.62V13h1.259zm5.329 0V3.669h-1.244L10.5 5.316v1.265l2.16-1.565h.062V13h1.244z"/>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button className="btn btn-secondary" title="Line Break" onClick={() => this.addLineBreak()}>
+                                        <svg class="bi bi-arrow-down-short" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M4.646 7.646a.5.5 0 01.708 0L8 10.293l2.646-2.647a.5.5 0 01.708.708l-3 3a.5.5 0 01-.708 0l-3-3a.5.5 0 010-.708z" clip-rule="evenodd"/>
+                                            <path fill-rule="evenodd" d="M8 4.5a.5.5 0 01.5.5v5a.5.5 0 01-1 0V5a.5.5 0 01.5-.5z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        <textarea className="w-90 textarea" value={this.state.html} onChange={() => this.onChangeHTML()} id="html"></textarea>
                     </div>
                 </div>
                 <hr className="mb-3 mt-3" />

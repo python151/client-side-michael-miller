@@ -38,4 +38,17 @@ input.w-100.m-0 {
 }
 .textarea {
   min-height: 200px;
+  width: 90%;
+}
+.toolbar {
+  width: 50px;
+}
+.toolbar ul {
+  margin-left: -40px;
+}
+.toolbar ul li {
+  margin-top: 5px;
+  text-indent: 0;
+  list-style-type: none;
+  list-style: none;
 }

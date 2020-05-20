@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import {API} from '../App.js'
 import '../static/home.css';
 
 export default class UserPage extends React.Component {
