@@ -47,6 +47,10 @@ export default class NewestPosts extends React.Component {
        }
      }
 
+     formatDate = (date) => {
+        return date.split("T")[0].split("-").join("/")
+     }
+
      render() {
         return this.state.loading === true ? (
           <div className="text-center">
@@ -68,11 +72,12 @@ export default class NewestPosts extends React.Component {
                                 <a class="dropdown-item" href={"/delete/"+post.id}>Delete</a>
                             </div></div>) : (<div></div>) }
                         </div>
-                      <div id={post.id+""} className="m-2">{post.html}</div>
+                        <small className="date">{this.formatDate(post.date)}</small>
+                        <div id={post.id+""} className="m-2">{post.html}</div>
                     </div>
                   </div>
                 ))}
           </div>
         )
-       }
-      }
+    }
+}
