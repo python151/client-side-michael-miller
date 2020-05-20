@@ -28,7 +28,7 @@ export default class EditPostPage extends React.Component {
 
     callApi = (id) =>{
         let sessionKey = localStorage.getItem("session-key")
-        fetch("http://localhost:8000/get/post/"+id+"/?session-key="+sessionKey)
+        fetch("https://michaelmiller.pythonanywhere.com/get/post/"+id+"/?session-key="+sessionKey)
         .then(response => response.json())
         .then(response => this.handleApiResponse(response))
     }
@@ -61,7 +61,7 @@ export default class EditPostPage extends React.Component {
     sendToApi = () => {
         this.startSaveAnimation();
         let sessionKey = localStorage.getItem("session-key")
-        fetch("http://localhost:8000/edit/post/"+this.state.id+"/?session-key="+sessionKey, {
+        fetch("https://michaelmiller.pythonanywhere.com/edit/post/"+this.state.id+"/?session-key="+sessionKey, {
             method: 'POST',
             body: JSON.stringify({
                 title: this.state.title,

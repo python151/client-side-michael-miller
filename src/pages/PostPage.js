@@ -24,7 +24,7 @@ export default class UserPage extends React.Component {
  }
 
   ApiCall = (id) => {
-    fetch("http://localhost:8000/get/post/"+id+"/")
+    fetch("https://michaelmiller.pythonanywhere.com/get/post/"+id+"/")
     .then(response => response.json())
     .then(response => this.handleApiResponse(response))
   }

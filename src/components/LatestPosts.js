@@ -21,7 +21,7 @@ export default class NewestPosts extends React.Component {
     }
    
      ApiCall = (amount) => {
-       fetch("http://localhost:8000/get/latest/posts/"+amount+"/")
+       fetch("https://michaelmiller.pythonanywhere.com/get/latest/posts/"+amount+"/")
        .then(response => response.json())
        .then(response => this.handleApiResponse(response))
      }

@@ -28,7 +28,7 @@ export default class Login extends React.Component {
     let username = document.getElementById("username").value
     let password = document.getElementById("password").value
   
-    fetch("http://localhost:8000/login/?username="+username+"&password="+password)
+    fetch("https://michaelmiller.pythonanywhere.com/login/?username="+username+"&password="+password)
     .then(response => response.json())
     .then(response => this.handleFormResponse(response))
     .catch((error) => {alert(error)})

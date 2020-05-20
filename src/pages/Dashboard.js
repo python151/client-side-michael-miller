@@ -17,7 +17,7 @@ const makeNewPost = () => {
   }
 
   let sessionKey = localStorage.getItem("session-key")
-  fetch("http://localhost:8000/create/new/post/?session-key="+sessionKey, {
+  fetch("https://michaelmiller.pythonanywhere.com/create/new/post/?session-key="+sessionKey, {
     method: "POST",
     body: JSON.stringify({
       title: "New Post",
