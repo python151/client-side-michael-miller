@@ -1,18 +1,11 @@
-# React Router Example
 
-How to make a Single Page Application with React Router.
 
-### [View Tutorial](https://www.taniarascia.com/using-react-router-spa)
 
-## Purpose
 
-Set up a router in React.
+# React client side of blog
+It is a blog I made for my dad so he can post advanced posts of his vacation.
 
-- `/` - root
-- `/:page_id` - page
-- `/categories/:category_id` - category
-
-## Author
+## Author of original template
 
 - [Tania Rascia](https://www.taniarascia.com)
 
