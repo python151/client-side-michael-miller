@@ -6,7 +6,48 @@ export default class EditPostPage extends React.Component {
         super(props)
         this.state = {
             loading: true,
+            timer: -1,
+            timerActive: false,
+            timerCallId: 0,
         }
+    }
+
+    updateTimerCallId = () => {
+        this.setState({
+            timerCallId: this.state.timerCallId+1,
+        })
+        return this.state.timerCallId
+    }
+
+    addToTimer = (timerId) => {
+        if (timerId !== this.state.timerCallId) {
+            return;
+        }
+
+        if (this.state.timer - 1 <= 0) {
+            this.sendToApi();
+            this.setState({
+                timer: -1,
+                timerActive: false,
+            })
+        } else {
+            this.setState({
+                timer: this.state.timer - 1,
+            })
+        }
+    }
+
+    restartTimer = () => {
+        this.startSaveAnimation();
+        this.setState({
+            timer: 5,
+            timerActive: true,
+        })
+    }
+
+    sendToCache = () => { 
+        sessionStorage.setItem("html-"+this.state.id, this.state.html)
+        this.restartTimer()
     }
 
     loadHtml = () => {
@@ -39,9 +80,15 @@ export default class EditPostPage extends React.Component {
     }
 
     componentDidUpdate() {
-        if (!this.state.loading) {
+        if (!this.state.loading && !this.state.timerActive) {
             this.loadHtml()
         }
+    }
+
+    componentDidMount() {
+        window.setInterval(() => {
+            if (this.state.timerActive) {this.addToTimer(this.updateTimerCallId())}
+        }, 1000)
     }
 
     startSaveAnimation = () => {
@@ -78,7 +125,7 @@ export default class EditPostPage extends React.Component {
             html: html
         })
         this.loadHtml()
-        this.sendToApi()
+        this.sendToCache()
     }
 
     onChangeTitle = () => {
@@ -87,7 +134,7 @@ export default class EditPostPage extends React.Component {
             title: title
         })
         document.getElementById("titlePreview").innerHTML = title
-        this.sendToApi()
+        this.sendToCache()
     }
 
     addTextSpan = () => {
@@ -191,9 +238,7 @@ frameborder="0"></iframe>
                             <input className="w-100 m-0 mt-1 mb-1" placeholder="title" value={this.state.title} onChange={() => this.onChangeTitle()} id="title"/>
                         </span>
 
-                        <span className="col">
-                            
-                        </span>
+                        <span className="col"></span>
                     </div>
                     
                     <div className="row h-100 mt-3">
