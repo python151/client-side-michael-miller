@@ -21,7 +21,7 @@ export default class NewestPosts extends React.Component {
        
     }
 
-    cacheResponse(response, amount) {
+    cacheResponse(response) {
         sessionStorage.setItem("latest-posts-"+this.state.amount, JSON.stringify(response))
         return response
     }
@@ -32,10 +32,11 @@ export default class NewestPosts extends React.Component {
             this.handleApiResponse(JSON.parse(latestPostsAmount))
         }
         else {
+            this.setState({reloading: true})
             fetch("https://michaelmiller.pythonanywhere.com/get/latest/posts/"+amount+"/")
             .then(response => response.json())
-            .then(response => this.cacheResponse(response, amount))
-            .then(response => this.handleApiResponse(response, amount))
+            .then(response => this.cacheResponse(response))
+            .then(response => this.handleApiResponse(response))
         }
      }
    
@@ -72,6 +73,9 @@ export default class NewestPosts extends React.Component {
      reloadCurrent = () => {
         sessionStorage.removeItem("latest-posts-"+this.state.amount)
         this.ApiCall(this.state.amount)
+        this.state.posts.map(post => {
+            this.runHtmlEval(post.id)
+        })
      }
 
      render() {
@@ -84,7 +88,7 @@ export default class NewestPosts extends React.Component {
         ) : (
           <div className="container">
                 <div className="date mr-2">
-                    <button className="close" onClick={() => this.reloadCurrent()}>
+                    <button className={"close "+this.state.reloading} onClick={() => this.reloadCurrent()}>
                         <svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M2.854 7.146a.5.5 0 00-.708 0l-2 2a.5.5 0 10.708.708L2.5 8.207l1.646 1.647a.5.5 0 00.708-.708l-2-2zm13-1a.5.5 0 00-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 00-.708.708l2 2a.5.5 0 00.708 0l2-2a.5.5 0 000-.708z" clip-rule="evenodd"/>
                             <path fill-rule="evenodd" d="M8 3a4.995 4.995 0 00-4.192 2.273.5.5 0 01-.837-.546A6 6 0 0114 8a.5.5 0 01-1.001 0 5 5 0 00-5-5zM2.5 7.5A.5.5 0 013 8a5 5 0 009.192 2.727.5.5 0 11.837.546A6 6 0 012 8a.5.5 0 01.501-.5z" clip-rule="evenodd"/>
