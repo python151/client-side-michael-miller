@@ -11,6 +11,8 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Logout from './pages/Logout'
 
+import redirect from './pages/Redirect'
+
 import './static/main.css'
 
 export default function App() {
@@ -61,6 +63,8 @@ export default function App() {
           <Route path="/login" component={Login} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/logout" component={Logout} />
+
+          <Route path="/redirect" component={Reidrect} />
 
           <Route component={Error404} />
         </Switch>

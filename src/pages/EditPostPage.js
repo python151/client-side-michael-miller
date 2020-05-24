@@ -298,7 +298,7 @@ frameborder="0"></iframe>
                                 </li>
                             </ul>
                         </div>
-                        <textarea className="w-90 textarea" value={this.state.html} onChange={() => this.onChangeHTML()} id="html"></textarea>
+                        <textarea className="w-90 textarea card" value={this.state.html} onChange={() => this.onChangeHTML()} id="html"></textarea>
                     </div>
                 </div>
                 <hr className="mb-3 mt-3" />
