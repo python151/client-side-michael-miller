@@ -64,7 +64,7 @@ export default function App() {
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/logout" component={Logout} />
 
-          <Route path="/redirect" component={Reidrect} />
+          <Route path="/redirect" component={redirect} />
 
           <Route component={Error404} />
         </Switch>
